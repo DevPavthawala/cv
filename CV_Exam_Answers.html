@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Computer Vision — Exam Answer Sheets</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+<style>
+  :root {
+    --blue: #1a4a8a;
+    --blue-light: #e8f0fb;
+    --accent: #2e6fcc;
+    --green: #166534;
+    --green-light: #f0fdf4;
+    --border: #d1d5db;
+    --code-bg: #f3f4f6;
+    --text: #1f2937;
+    --muted: #6b7280;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--text);
+    background: #f9fafb;
+    padding: 0 0 60px;
+  }
+  /* ── Cover ── */
+  .cover {
+    background: linear-gradient(135deg, var(--blue) 0%, #2e6fcc 100%);
+    color: white;
+    padding: 48px 40px 40px;
+    text-align: center;
+  }
+  .cover h1 { font-size: 2rem; letter-spacing: .5px; margin-bottom: 8px; }
+  .cover .sub { font-size: 1rem; opacity: .85; }
+  .cover .pills { margin-top: 18px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .pill { background: rgba(255,255,255,.18); border: 1px solid rgba(255,255,255,.35);
+          border-radius: 20px; padding: 4px 14px; font-size: .85rem; }
+
+  /* ── Container ── */
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── Section header ── */
+  .section-header {
+    background: var(--blue);
+    color: white;
+    padding: 14px 24px;
+    border-radius: 10px;
+    margin: 40px 0 6px;
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: .3px;
+  }
+  .section-sub {
+    color: var(--muted);
+    font-size: .85rem;
+    margin-bottom: 20px;
+    padding-left: 4px;
+  }
+
+  /* ── Question card ── */
+  .card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 18px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+  }
+  .card-head {
+    background: var(--blue-light);
+    border-bottom: 1px solid #c7d8f5;
+    padding: 10px 18px;
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+  .q-num {
+    background: var(--accent);
+    color: white;
+    font-weight: 700;
+    font-size: .82rem;
+    border-radius: 5px;
+    padding: 2px 8px;
+    white-space: nowrap;
+  }
+  .q-text { font-weight: 600; font-size: .95rem; color: var(--blue); }
+  .card-body { padding: 16px 20px; }
+
+  /* ── Answer content ── */
+  p { margin-bottom: .6em; }
+  p:last-child { margin-bottom: 0; }
+  ol, ul { margin: .4em 0 .6em 1.5em; }
+  li { margin-bottom: .25em; }
+  .math-block {
+    background: var(--code-bg);
+    border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 10px 0;
+    overflow-x: auto;
+  }
+  .label {
+    display: inline-block;
+    background: #fef3c7;
+    border: 1px solid #fcd34d;
+    color: #92400e;
+    font-size: .78rem;
+    border-radius: 4px;
+    padding: 1px 7px;
+    margin-bottom: 5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .3px;
+  }
+  .label.green { background: var(--green-light); border-color: #86efac; color: var(--green); }
+  .label.red { background: #fef2f2; border-color: #fca5a5; color: #991b1b; }
+  .note {
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    border-radius: 6px;
+    padding: 8px 14px;
+    font-size: .88rem;
+    margin-top: 8px;
+    color: #78350f;
+  }
+  code {
+    background: var(--code-bg);
+    border-radius: 3px;
+    padding: 1px 5px;
+    font-family: Consolas, monospace;
+    font-size: .88em;
+  }
+  .pseudocode {
+    background: #1e1e2e;
+    color: #cdd6f4;
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-family: Consolas, monospace;
+    font-size: .88rem;
+    line-height: 1.6;
+    margin: 10px 0;
+    overflow-x: auto;
+  }
+  .pseudocode .kw { color: #cba6f7; font-weight: bold; }
+  .pseudocode .cm { color: #6c7086; font-style: italic; }
+  .pseudocode .num { color: #fab387; }
+
+  table {
+    border-collapse: collapse;
+    margin: 10px 0;
+    font-size: .9rem;
+  }
+  th, td {
+    border: 1px solid var(--border);
+    padding: 6px 14px;
+    text-align: center;
+  }
+  th { background: var(--blue-light); font-weight: 700; color: var(--blue); }
+  td.center { font-weight: 600; background: #fef9c3; }
+
+  .toc { background: white; border: 1px solid var(--border); border-radius: 10px;
+         padding: 20px 24px; margin: 30px 0; }
+  .toc h2 { font-size: 1rem; color: var(--blue); margin-bottom: 10px; }
+  .toc a { color: var(--accent); text-decoration: none; font-size: .9rem; }
+  .toc a:hover { text-decoration: underline; }
+  .toc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 20px; }
+  @media (max-width: 600px) { .toc-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <h1>Computer Vision — Master Exam</h1>
+  <div class="sub">Formatted Answer Sheets &nbsp;|&nbsp; Winter Semesters 2023/24 &amp; 2024/25</div>
+  <div class="pills">
+    <span class="pill">WS 2324 · 21 Questions · 75 pts · 120 min</span>
+    <span class="pill">WS 2425 · 18 Questions · 75 pts · 120 min</span>
+  </div>
+</div>
+
+<div class="wrap">
+
+<div class="toc">
+  <h2>Contents</h2>
+  <div class="toc-grid">
+    <a href="#ws2425">▶ Part A — WS 2024/25</a>
+    <a href="#ws2324">▶ Part B — WS 2023/24</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section-header" id="ws2425">Part A — WS 2024/25 &nbsp;(18 Exercises)</div>
+<div class="section-sub">Exam topics: Filtering, Kalman, Hough, Epipolar Geometry, PCA Shape Models, SfM, MRF, Camera Calibration, Level Sets, Distance Transform</div>
+
+<!-- Q1 -->
+<div class="card">
+  <div class="card-head">
+    <span class="q-num">Q1</span>
+    <span class="q-text">Prove: \(\alpha \cdot h*(f+g) = h*(\alpha f) + h*(\alpha g)\)</span>
+  </div>
+  <div class="card-body">
+    <span class="label">Proof</span>
+    <p>Start from the convolution definition:</p>
+    <div class="math-block">$$
+      (h*(f+g))(x)=\int h(\tau)\bigl(f(x-\tau)+g(x-\tau)\bigr)\,d\tau
+    $$</div>
+    <p>Multiply both sides by scalar \(\alpha\):</p>
+    <div class="math-block">$$
+      \alpha\,(h*(f+g))(x)=\int h(\tau)\bigl(\alpha f(x-\tau)+\alpha g(x-\tau)\bigr)\,d\tau
+    $$</div>
+    <p>Split the integral (linearity of integration):</p>
+    <div class="math-block">$$
+      =\int h(\tau)\,\alpha f(x-\tau)\,d\tau + \int h(\tau)\,\alpha g(x-\tau)\,d\tau
+      = (h*\alpha f)(x)+(h*\alpha g)(x)
+    $$</div>
+    <p><strong>Hence proved.</strong></p>
+  </div>
+</div>
+
+<!-- Q2 -->
+<div class="card">
+  <div class="card-head">
+    <span class="q-num">Q2</span>
+    <span class="q-text">Prove: convolving twice with \(G_\sigma\) equals one convolution with \(G_{\sigma\sqrt{2}}\)</span>
+  </div>
+  <div class="card-body">
+    <span class="label">Proof</span>
+    <p>Key property: the convolution of two Gaussians is a Gaussian whose variance is the <em>sum</em> of the individual variances:</p>
+    <div class="math-block">$$
+      \mathcal{N}(0,\sigma_1^2)*\mathcal{N}(0,\sigma_2^2)=\mathcal{N}(0,\sigma_1^2+\sigma_2^2)
+    $$</div>
+    <p>Setting \(\sigma_1=\sigma_2=\sigma\):</p>
+    <div class="math-block">$$
+      G_\sigma * G_\sigma = G_{\sqrt{\sigma^2+\sigma^2}} = G_{\sigma\sqrt{2}}
+    $$</div>
+    <p><strong>Hence proved.</strong></p>
+  </div>
+</div>
+
+<!-- Q3 -->
+<div class="card">
+  <div class="card-head">
+    <span class="q-num">Q3</span>
+    <span class="q-text">Prove: any linear shift-invariant (LSI) operator \(T\) can be represented as convolution</span>
+  </div>
+  <div class="card-body">
+    <span class="label">Proof</span>
+    <p><strong>Step 1 — Define impulse response.</strong> Let \(\delta\) be the unit impulse. Define kernel:</p>
+    <div class="math-block">$$h = T\{\delta\}$$</div>
+    <p><strong>Step 2 — Decompose signal.</strong> Any discrete signal can be written as a weighted sum of shifted impulses:</p>
+    <div class="math-block">$$f = \sum_k f[k]\,\delta(\cdot - k)$$</div>
+    <p><strong>Step 3 — Apply linearity.</strong></p>
+    <div class="math-block">$$T\{f\} = \sum_k f[k]\,T\{\delta(\cdot-k)\}$$</div>
+    <p><strong>Step 4 — Apply shift-invariance.</strong> Since \(T\) is shift-invariant, \(T\{\delta(\cdot-k)\} = h(\cdot-k)\):</p>
+    <div class="math-block">$$T\{f\} = \sum_k f[k]\,h(\cdot-k) = f * h$$</div>
+    <p><strong>Hence proved.</strong> Every LSI operator is a convolution with its impulse response.</p>
+  </div>
+</div>
+
+<!-- Q4 -->
+<div class="card">
+  <div class="card-head">
+    <span class="q-num">Q4</span>
+    <span class="q-text">Kernel separability and time complexity</span>
+  </div>
+  <div class="card-body">
+    <span class="label green">Definition</span>
+    <p>A \(k\times k\) kernel \(K\) is <strong>separable</strong> if it can be written as an outer product of two 1D vectors:</p>
+    <div class="math-block">$$K = \mathbf{a}\,\mathbf{b}^T, \quad \mathbf{a},\mathbf{b}\in\mathbb{R}^k \quad (\text{rank-1 matrix})$$</div>
+    <p><strong>Time complexity for an \(n\times n\) image with a \(k\times k\) kernel:</strong></p>
+    <table>
+      <tr><th>Kernel type</th><th>Complexity</th><th>Reason</th></tr>
+      <tr><td>General (non-separable)</td><td>\(\mathcal{O}(n^2 k^2)\)</td><td>Full 2D sliding window</td></tr>
+      <tr><td>Separable</td><td>\(\mathcal{O}(n^2 k)\)</td><td>Two 1D passes (horizontal + vertical)</td></tr>
+    </table>
+    <p>Separable filtering gives a speedup factor of \(k\) — significant for large kernels (e.g., \(k=15\) means 15× faster).</p>
+  </div>
+</div>
+
+<!-- Q5 -->
+<div class="card">
+  <div class="card-head">
+    <span class="q-num">Q5</span>
+    <span class="q-text">Kalman filter — prediction and update equations</span>
+  </div>
+  <div class="card-body">
+    <p><strong>State and measurement models:</strong></p>
+    <div class="math-block">$$x_k = F_k x_{k-1} + B_k u_k + w_k, \quad w_k\sim\mathcal{N}(0,Q_k)$$
+$$z_k = H_k x_k + v_k, \quad v_k\sim\mathcal{N}(0,R_k)$$</div>
+    <p><strong>Prediction step:</strong></p>
+    <div class="math-block">$$\hat{x}_{k|k-1} = F_k\hat{x}_{k-1|k-1} + B_k u_k$$
+$$P_{k|k-1} = F_k P_{k-1|k-1} F_k^T + Q_k$$</div>
+    <p><strong>Update (correction) step:</strong></p>
+    <div class="math-block">$$K_k = P_{k|k-1}H_k^T\bigl(H_k P_{k|k-1}H_k^T + R_k\bigr)^{-1} \quad \text{(Kalman gain)}$$
+$$\hat{x}_{k|k} = \hat{x}_{k|k-1} + K_k\bigl(z_k - H_k\hat{x}_{k|k-1}\bigr)$$
+$$P_{k|k} = (I - K_k H_k)\,P_{k|k-1}$$</div>
+  </div>
+</div>
+
+<!-- Q6 -->
+<div class="card">
+  <div class="card-head">
+    <span class="q-num">Q6</span>
+    <span class="q-text">Two main assumptions of the standard Kalman filter</span>
+  </div>
+  <div class="card-body">
+    <ol>
+      <li><strong>Linearity:</strong> Both the state transition model (\(F_k\)) and the measurement model (\(H_k\)) must be linear.</li>
+      <li><strong>Gaussian noise:</strong> Process noise \(w_k\) and measurement noise \(v_k\) are zero-mean, white, mutually independent Gaussian distributions.</li>
+    </ol>
+  </div>
+</div>
+
+<!-- Q7 -->
+<div class="card">
+  <div class="card-head">
+    <span class="q-num">Q7</span>
+    <span class="q-text">Three other filters beyond the standard Kalman filter</span>
+  </div>
+  <div class="card-body">
+    <ol>
+      <li><strong>Extended Kalman Filter (EKF):</strong> Linearizes nonlinear models via first-order Taylor expansion (Jacobians). Advantage: handles mild nonlinearity with low computational cost.</li>
+      <li><strong>Unscented Kalman Filter (UKF):</strong> Propagates a set of deterministically chosen sigma points through the nonlinear function to estimate mean and covariance. Advantage: more accurate than EKF for stronger nonlinearities, no Jacobian required.</li>
+      <li><strong>Particle Filter:</strong> Represents the posterior distribution using a set of weighted random samples (particles). Advantage: handles non-Gaussian, multimodal, and highly nonlinear distributions.</li>
+    </ol>
+  </div>
+</div>
+
+<!-- Q8 -->
+<div class="card">
+  <div class="card-head">
+    <span class="q-num">Q8</span>
+    <span class="q-text">Hough transform for circles — unknown radius, known gradient direction \(\theta\)</span>
+  </div>
+  <div class="card-body">
+    <span class="label">Pseudocode</span>
+    <div class="pseudocode"><span class="cm">// Input: edge map + gradient direction θ per pixel</span>
+<span class="cm">// Output: detected circles (a, b, r)</span>
+
+<span class="kw">Initialize</span> accumulator A(a, b, r) = 0
+  <span class="cm">for all (a,b) in image space, r ∈ [r_min, r_max]</span>
+
+<span class="kw">For each</span> edge pixel (x, y) with gradient direction θ(x,y):
+  <span class="kw">For each</span> radius r ∈ [r_min, r_max]:
+    <span class="cm">// Vote for center along gradient direction</span>
+    a₁ = x − r·cos(θ)
+    b₁ = y − r·sin(θ)
+    A(a₁, b₁, r) += <span class="num">1</span>
+
+    <span class="cm">// Also vote in opposite direction</span>
+    a₂ = x + r·cos(θ)
+    b₂ = y + r·sin(θ)
+    A(a₂, b₂, r) += <span class="num">1</span>
+
+<span class="kw">Find</span> local maxima in A(a, b, r) above threshold τ
+<span class="kw">Return</span> (a, b, r) for each peak</div>
+    <div class="note">The gradient direction constrains the center to lie along one of two rays, reducing a 2D locus (full circle in standard Hough) to just two candidate points per radius — significantly fewer votes and fewer false positives.</div>
+  </div>
+</div>
+
+<!-- Q9 -->
+<div class="card">
+  <div class="card-head">
+    <span class="q-num">Q9</span>
+    <span class="q-text">Epipolar constraint for the uncalibrated case</span>
+  </div>
+  <div class="card-body">
+    <p>Two points \(x\) and \(x'\) (in homogeneous image coordinates) are correspondences if and only if:</p>
+    <div class="math-block">$$x'^T F x = 0$$</div>
+    <p>where \(F\) is the <strong>fundamental matrix</strong> (a \(3\times3\) rank-2 matrix). This encodes the geometric relationship between two uncalibrated cameras — for a given point \(x\) in image 1, its corresponding point \(x'\) in image 2 must lie on the epipolar line \(\ell' = Fx\).</p>
+  </div>
+</div>
+
+<!-- Q10 -->
+<div class="card">
+  <div class="card-head">
+    <span class="q-num">Q10</span>
+    <span class="q-text">PCA shape model: 28 shapes, 54 2D points, 8 parameters</span>
+  </div>
+  <div class="card-body">
+    <span class="label">Step-by-step</span>
+    <p><strong>1. Vectorize each shape.</strong> Each shape has 54 × 2 = 108 coordinates:</p>
+    <div class="math-block">$$s_i \in \mathbb{R}^{108}, \quad i = 1,\ldots,28$$</div>
+    <p><strong>2. Form data matrix.</strong></p>
+    <div class="math-block">$$S = [s_1, \ldots, s_{28}] \in \mathbb{R}^{108 \times 28}$$</div>
+    <p><strong>3. Compute mean and centre.</strong></p>
+    <div class="math-block">$$\bar{s} = \frac{1}{28}\sum_{i=1}^{28} s_i \in \mathbb{R}^{108}, \qquad \tilde{S} = S - \bar{s}\mathbf{1}^T \in \mathbb{R}^{108\times 28}$$</div>
+    <p><strong>4. Compute covariance and eigen-decompose.</strong></p>
+    <div class="math-block">$$C = \frac{1}{27}\tilde{S}\tilde{S}^T \in \mathbb{R}^{108\times 108}$$</div>
+    <p><strong>5. Keep top 8 eigenvectors.</strong></p>
+    <div class="math-block">$$P = [u_1, \ldots, u_8] \in \mathbb{R}^{108 \times 8}$$</div>
+    <p><strong>6. Shape model (only 8 shape parameters \(b\)):</strong></p>
+    <div class="math-block">$$s \approx \bar{s} + P\,b, \quad b \in \mathbb{R}^8$$</div>
+    <div class="note">Note: Procrustes alignment was already done, so we skip translation/rotation/scale removal here.</div>
+  </div>
+</div>
+
+<!-- Q11 -->
+<div class="card">
+  <div class="card-head">
+    <span class="q-num">Q11</span>
+    <span class="q-text">Nonrigid structure from motion using a shape basis (Bregler et al. 2000)</span>
+  </div>
+  <div class="card-body">
+    <p><strong>Model:</strong> The 3D shape at each frame \(t\) is a linear combination of \(K\) basis shapes:</p>
+    <div class="math-block">$$S_t = \sum_{i=1}^K c_{ti}\,B_i, \quad B_i \in \mathbb{R}^{3\times P}$$</div>
+    <p>Under orthographic camera:</p>
+    <div class="math-block">$$W_t = R_t S_t + T_t$$</div>
+    <p>Stacking all frames, the measurement matrix \(W \in \mathbb{R}^{2F \times P}\) has rank \(\le 3K\).</p>
+    <span class="label">Pseudocode</span>
+    <div class="pseudocode"><span class="kw">Input:</span>  Tracked 2D point correspondences W (2F × P)
+<span class="kw">Output:</span> Basis shapes B_i, coefficients c_ti, rotations R_t
+
+<span class="num">1.</span> Centre tracks (remove translation T_t per frame)
+<span class="num">2.</span> Factorize: W ≈ M·S  using truncated SVD with rank 3K
+<span class="num">3.</span> Enforce metric upgrade constraints on M
+   (each 2×3 block must be a valid scaled rotation)
+<span class="num">4.</span> Recover R_t and c_ti from M
+<span class="num">5.</span> Recover basis shapes B_i from S
+<span class="num">6.</span> (Optional) Refine via alternating optimisation / bundle adjustment</div>
+  </div>
+</div>
+
+<!-- Q12 -->
+<div class="card">
+  <div class="card-head">
+    <span class="q-num">Q12</span>
+    <span class="q-text">Condition for polynomial-time multilabel MRF optimization</span>
+  </div>
+  <div class="card-body">
+    <p>The pairwise (smoothness) term \(V_{pq}(L_p, L_q)\) must be <strong>submodular</strong> — equivalently, it must satisfy the metric (or semi-metric) condition:</p>
+    <div class="math-block">$$V_{pq}(a,b) + V_{pq}(c,d) \le V_{pq}(a,d) + V_{pq}(c,b)$$</div>
+    <p>Under this condition, graph-cut based algorithms such as <strong>alpha-expansion</strong> and <strong>alpha-beta swap</strong> are applicable and converge to a locally optimal solution in polynomial time per move.</p>
+    <p>Common valid choices include the truncated linear and truncated quadratic penalties. Non-submodular terms make the problem NP-hard in general.</p>
+  </div>
+</div>
+
+<!-- Q13 -->
+<div class="card">
+  <div class="card-head">
+    <span class="q-num">Q13</span>
+    <span class="q-text">Computing the fundamental matrix \(F\) from 8 correspondences</span>
+  </div>
+  <div class="card-body">
+    <p>For each correspondence \((u_i,v_i) \leftrightarrow (u'_i,v'_i)\), the epipolar constraint \(x'^T F x = 0\) expands to:</p>
+    <div class="math-block">$$[u'_i u_i,\; u'_i v_i,\; u'_i,\; v'_i u_i,\; v'_i v_i,\; v'_i,\; u_i,\; v_i,\; 1]\,\mathbf{f} = 0$$</div>
+    <p>where \(\mathbf{f} = \text{vec}(F)\in\mathbb{R}^9\). Stack 8 such equations into \(A\mathbf{f} = 0\), \(A\in\mathbb{R}^{8\times9}\).</p>
+    <p><strong>Solve:</strong> Take the right singular vector of \(A\) corresponding to the smallest singular value (via SVD).</p>
+    <p><strong>Enforce rank-2:</strong> Decompose \(F = U\Sigma V^T\), set the smallest singular value of \(\Sigma\) to zero, and reconstruct \(F\).</p>
+    <p><strong>Denormalize</strong> if normalized point coordinates were used.</p>
+  </div>
+</div>
+
+<!-- Q14 -->
+<div class="card">
+  <div class="card-head">
+    <span class="q-num">Q14</span>
+    <span class="q-text">Normalized eight-point algorithm</span>
+  </div>
+  <div class="card-body">
+    <div class="pseudocode"><span class="kw">Input:</span>  8+ correspondences (x_i, x'_i)
+
+<span class="num">1.</span> Normalize points in each image independently:
+   - Translate centroid to origin
+   - Scale so mean distance from origin = √2
+   - Store transforms T (image 1) and T' (image 2)
+
+<span class="num">2.</span> Build matrix A from normalized correspondences
+   (one row per correspondence, as shown in Q13)
+
+<span class="num">3.</span> Solve A·f = 0 via SVD → reshape to F̂ (3×3)
+
+<span class="num">4.</span> Enforce rank-2 on F̂:
+   F̂ = U diag(σ₁,σ₂,0) Vᵀ
+
+<span class="num">5.</span> Denormalize:
+   F = T'ᵀ F̂ T
+
+<span class="num">6.</span> (Optional) normalize scale so ||F|| = 1</div>
+    <div class="note"><strong>Why normalize?</strong> Point coordinates in pixel space have very different scales, causing poor numerical conditioning. Normalization makes the system well-conditioned and greatly improves accuracy.</div>
+  </div>
+</div>
+
+<!-- Q15 -->
+<div class="card">
+  <div class="card-head">
+    <span class="q-num">Q15</span>
+    <span class="q-text">Linear system for estimating camera matrix \(P\) from 3D–2D correspondences (DLT)</span>
+  </div>
+  <div class="card-body">
+    <p>For 3D point \(X_i = [X_i, Y_i, Z_i, 1]^T\) with 2D projection \(x_i = (u_i, v_i)\), the relation \(x_i \sim P X_i\) yields two linear equations by eliminating the scale:</p>
+    <div class="math-block">$$[-X_i^T,\; \mathbf{0}^T,\; u_i X_i^T]\,\mathbf{p} = 0$$
+$$[\mathbf{0}^T,\; -X_i^T,\; v_i X_i^T]\,\mathbf{p} = 0$$</div>
+    <p>where \(\mathbf{p} = \text{vec}(P)\in\mathbb{R}^{12}\). Stacking over all \(n\) points:</p>
+    <div class="math-block">$$A\,\mathbf{p} = 0, \quad A \in \mathbb{R}^{2n\times 12}$$</div>
+    <p>Solve via SVD. Minimum 6 points required (each contributing 2 equations for 11 DoF).</p>
+  </div>
+</div>
+
+<!-- Q16 -->
+<div class="card">
+  <div class="card-head">
+    <span class="q-num">Q16</span>
+    <span class="q-text">Camera parameters in matrix form (no distortion)</span>
+  </div>
+  <div class="card-body">
+    <div class="math-block">$$P = K[R \mid t]$$</div>
+    <p><strong>Intrinsic matrix</strong> \(K\) (5 DoF):</p>
+    <div class="math-block">$$K = \begin{bmatrix} f_x & s & c_x \\ 0 & f_y & c_y \\ 0 & 0 & 1 \end{bmatrix}$$</div>
+    <p>where \(f_x, f_y\) are focal lengths in pixels, \((c_x, c_y)\) is the principal point, and \(s\) is the skew (usually 0 for modern cameras).</p>
+    <p><strong>Extrinsic parameters:</strong> rotation \(R \in SO(3)\) (3 DoF) and translation \(t \in \mathbb{R}^3\) (3 DoF) — encode the camera pose in world coordinates.</p>
+  </div>
+</div>
+
+<!-- Q17 -->
+<div class="card">
+  <div class="card-head">
+    <span class="q-num">Q17</span>
+    <span class="q-text">Discrete form of \(\partial_t\phi = w|\nabla\phi|\operatorname{div}\!\left(\frac{\nabla\phi}{|\nabla\phi|}\right) + \nabla w^T\nabla\phi\)</span>
+  </div>
+  <div class="card-body">
+    <p>This is the <strong>geodesic active contour / weighted level set evolution</strong> equation. Using explicit (forward Euler) time stepping with step \(\Delta t\):</p>
+    <div class="math-block">$$\phi^{n+1}_{i,j} = \phi^n_{i,j} + \Delta t \left[w_{i,j}\,|\nabla\phi^n|_{i,j}\,\kappa^n_{i,j} + \nabla w_{i,j}\cdot\nabla\phi^n_{i,j}\right]$$</div>
+    <p>where the mean curvature term is:</p>
+    <div class="math-block">$$\kappa^n_{i,j} = \operatorname{div}\!\left(\frac{\nabla\phi^n}{|\nabla\phi^n|+\varepsilon}\right)_{i,j}$$</div>
+    <p>All spatial derivatives (gradient \(\nabla\), divergence \(\operatorname{div}\)) are computed via <strong>central finite differences</strong>. The small \(\varepsilon\) avoids division by zero.</p>
+    <div class="note"><strong>Context:</strong> \(\phi\) is the level set function, \(w\) is an edge-stopping weight (e.g., \(w = 1/(1+|\nabla I|^2)\)), and the zero level set of \(\phi\) is the evolving contour.</div>
+  </div>
+</div>
+
+<!-- Q18 -->
+<div class="card">
+  <div class="card-head">
+    <span class="q-num">Q18</span>
+    <span class="q-text">2D Distance Transform — forward/backward dynamic programming passes</span>
+  </div>
+  <div class="card-body">
+    <span class="label">Algorithm (Chamfer approximation)</span>
+    <p><strong>Initialization:</strong> Set edge pixels to 0, all others to \(\infty\).</p>
+    <p><strong>Forward pass</strong> (top-left → bottom-right): For each pixel update from its already-processed neighbours (e.g., left, up, up-left, up-right) by adding the corresponding chamfer weight.</p>
+    <p><strong>Backward pass</strong> (bottom-right → top-left): For each pixel update from its remaining neighbours (right, down, down-left, down-right).</p>
+    <p><strong>Result:</strong> Each cell contains the approximate shortest distance to the nearest edge pixel.</p>
+    <div class="note">In the exam, three 5×5 grids are provided to show: (1) initialisation, (2) after forward pass, (3) after backward pass. Fill them in using the chamfer mask weights (e.g., 1 for horizontal/vertical, \(\sqrt{2}\approx1.414\) or 1.5 for diagonal, depending on the mask).</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section-header" id="ws2324">Part B — WS 2023/24 &nbsp;(21 Exercises)</div>
+<div class="section-sub">Exam topics: SfM, Projections, Stereo, Image Processing, Filtering, Hough, Spectral Clustering</div>
+
+<!-- Q1 -->
+<div class="card">
+  <div class="card-head">
+    <span class="q-num">Q1</span>
+    <span class="q-text">Similarity ambiguity matrix in SfM — how many DoF?</span>
+  </div>
+  <div class="card-body">
+    <p>After factorization, the reconstruction is only defined up to a global <strong>similarity transform</strong> in 3D (scale + rotation + translation). Its homogeneous form is:</p>
+    <div class="math-block">$$H_s = \begin{bmatrix} sR & t \\ \mathbf{0}^T & 1 \end{bmatrix} \in \mathbb{R}^{4\times4}$$</div>
+    <p>where \(s\in\mathbb{R}^+\), \(R\in SO(3)\), \(t\in\mathbb{R}^3\).</p>
+    <p><strong>Degrees of freedom:</strong> 1 (scale) + 3 (rotation) + 3 (translation) = <strong>7 DoF</strong>.</p>
+  </div>
+</div>
+
+<!-- Q2 -->
+<div class="card">
+  <div class="card-head">
+    <span class="q-num">Q2</span>
+    <span class="q-text">Orthographic projection matrix</span>
+  </div>
+  <div class="card-body">
+    <p>Orthographic projection discards depth — only the first two rows of the rotation are used:</p>
+    <div class="math-block">$$\begin{bmatrix} u \\ v \end{bmatrix} = \begin{bmatrix} r_1^T \\ r_2^T \end{bmatrix} X + \begin{bmatrix} t_x \\ t_y \end{bmatrix}$$</div>
+    <p>In homogeneous form (\(2\times4\) matrix):</p>
+    <div class="math-block">$$P_{\text{ortho}} = \begin{bmatrix} r_{11} & r_{12} & r_{13} & t_x \\ r_{21} & r_{22} & r_{23} & t_y \end{bmatrix}$$</div>
+  </div>
+</div>
+
+<!-- Q3 -->
+<div class="card">
+  <div class="card-head">
+    <span class="q-num">Q3</span>
+    <span class="q-text">Knowns and unknowns in projective SfM</span>
+  </div>
+  <div class="card-body">
+    <p><strong>Known:</strong> 2D image point tracks \(x_{ij}\) — the observed projections of point \(j\) in view \(i\).</p>
+    <p><strong>Unknown:</strong></p>
+    <ol>
+      <li>Projective camera matrices \(P_i \in \mathbb{P}^{3\times4}\), one per view.</li>
+      <li>Projective 3D points \(X_j \in \mathbb{P}^3\), one per scene point.</li>
+      <li>A global projective gauge: the absolute frame is only defined up to a \(4\times4\) projective transformation (15 DoF ambiguity).</li>
+    </ol>
+  </div>
+</div>
+
+<!-- Q4 -->
+<div class="card">
+  <div class="card-head">
+    <span class="q-num">Q4</span>
+    <span class="q-text">Minimum views for projective SfM with 13 points; general equation</span>
+  </div>
+  <div class="card-body">
+    <p><strong>Parameter count:</strong></p>
+    <ul>
+      <li>Each projective camera: 11 DoF → \(11m\) total</li>
+      <li>Each projective 3D point: 3 DoF → \(3n\) total</li>
+      <li>Global projective gauge: −15 DoF</li>
+    </ul>
+    <p><strong>General constraint</strong> (\(m\) views, \(n\) points):</p>
+    <div class="math-block">$$2mn \ge 11m + 3n - 15$$</div>
+    <p><strong>For \(n = 13\) points:</strong></p>
+    <div class="math-block">$$26m \ge 11m + 39 - 15 = 11m + 24 \;\Rightarrow\; 15m \ge 24 \;\Rightarrow\; m \ge 2$$</div>
+    <p>So at least <strong>2 views</strong> are needed (by point-counting; in practice more are required for stable solutions).</p>
+  </div>
+</div>
+
+<!-- Q5 -->
+<div class="card">
+  <div class="card-head">
+    <span class="q-num">Q5</span>
+    <span class="q-text">Extrinsic parameters of the second camera from \(F\)</span>
+  </div>
+  <div class="card-body">
+    <p>Given intrinsics \(K\) (camera 1) and \(K'\) (camera 2), recover the essential matrix:</p>
+    <div class="math-block">$$E = K'^T F K$$</div>
+    <p>Decompose via SVD: \(E = U\,\text{diag}(1,1,0)\,V^T\) (enforce the correct singular value structure).</p>
+    <p>Define the helper matrix \(W = \begin{bmatrix}0&-1&0\\1&0&0\\0&0&1\end{bmatrix}\). There are four candidate solutions:</p>
+    <div class="math-block">$$[R\mid t] \in \{UWV^T\mid +U_3,\; UWV^T\mid -U_3,\; UW^TV^T\mid +U_3,\; UW^TV^T\mid -U_3\}$$</div>
+    <p>where \(U_3\) is the third column of \(U\). Select the correct solution using the <strong>cheirality check</strong>: triangulate a point and verify it lies in front of both cameras (\(Z > 0\)).</p>
+  </div>
+</div>
+
+<!-- Q6 -->
+<div class="card">
+  <div class="card-head">
+    <span class="q-num">Q6</span>
+    <span class="q-text">Cross product \(a \times b\) as matrix multiplication</span>
+  </div>
+  <div class="card-body">
+    <div class="math-block">$$a \times b = [a]_\times\, b, \qquad [a]_\times = \begin{bmatrix} 0 & -a_3 & a_2 \\ a_3 & 0 & -a_1 \\ -a_2 & a_1 & 0 \end{bmatrix}$$</div>
+    <p>The skew-symmetric matrix \([a]_\times\) is also used to form the essential matrix: \(E = [t]_\times R\).</p>
+  </div>
+</div>
+
+<!-- Q7 -->
+<div class="card">
+  <div class="card-head">
+    <span class="q-num">Q7</span>
+    <span class="q-text">Main steps of sequential projective SfM</span>
+  </div>
+  <div class="card-body">
+    <ol>
+      <li><strong>Initialize from two views:</strong> Estimate \(F\), set \(P_1 = [I\mid\mathbf{0}]\), derive \(P_2\) from \(F\), triangulate initial point cloud.</li>
+      <li><strong>Add new view:</strong> Use 2D–3D correspondences between the existing point cloud and the new image to estimate \(P_k\) via projective resection (PnP-style).</li>
+      <li><strong>Triangulate new points:</strong> Add points visible in the new view and at least one previous view.</li>
+      <li><strong>Bundle adjustment:</strong> Jointly refine all cameras \(\{P_i\}\) and 3D points \(\{X_j\}\) by minimizing total reprojection error.</li>
+      <li><strong>Repeat</strong> steps 2–4 until all views are integrated.</li>
+    </ol>
+  </div>
+</div>
+
+<!-- Q8 -->
+<div class="card">
+  <div class="card-head">
+    <span class="q-num">Q8</span>
+    <span class="q-text">Duality between shape and trajectory factorization</span>
+  </div>
+  <div class="card-body">
+    <p>Both approaches factorize the same measurement matrix \(W \in \mathbb{R}^{2F\times P}\), but organize the basis differently:</p>
+    <table>
+      <tr><th></th><th>Shape factorization</th><th>Trajectory factorization</th></tr>
+      <tr><td><strong>Basis spans</strong></td><td>3D shape space</td><td>Trajectory / time space</td></tr>
+      <tr><td><strong>Columns of basis</strong></td><td>Basis shapes \(B_i\in\mathbb{R}^{3\times P}\)</td><td>Temporal basis functions (e.g., DCT)</td></tr>
+      <tr><td><strong>Coefficients</strong></td><td>Per-frame blending weights \(c_{ti}\)</td><td>Per-point trajectory coefficients</td></tr>
+      <tr><td><strong>Duality</strong></td><td colspan="2">Roles of space and time are transposed — mathematically equivalent by swapping indices</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- Q9 -->
+<div class="card">
+  <div class="card-head">
+    <span class="q-num">Q9</span>
+    <span class="q-text">How are basis shapes estimated in trajectory factorization?</span>
+  </div>
+  <div class="card-body">
+    <p>The temporal basis functions (e.g., <strong>DCT basis</strong>, low-order polynomials, or splines) are typically <strong>predefined</strong> a priori — they are not estimated from data. The <strong>trajectory coefficients</strong> (how each point's motion projects onto each basis function) are then estimated from the data via least squares or alternating minimization.</p>
+  </div>
+</div>
+
+<!-- Q10 -->
+<div class="card">
+  <div class="card-head">
+    <span class="q-num">Q10</span>
+    <span class="q-text">Assumptions for trajectory factorization</span>
+  </div>
+  <div class="card-body">
+    <ol>
+      <li><strong>Low-dimensional motion subspace:</strong> All point trajectories lie in a low-dimensional linear subspace (spanned by \(K\) temporal basis functions).</li>
+      <li><strong>Orthographic/weak perspective projection:</strong> The camera model is simplified so that the measurement matrix has bounded rank and the factorization is tractable.</li>
+    </ol>
+  </div>
+</div>
+
+<!-- Q11 -->
+<div class="card">
+  <div class="card-head">
+    <span class="q-num">Q11</span>
+    <span class="q-text">Disparity from rectified stereo + depth equation</span>
+  </div>
+  <div class="card-body">
+    <p>After rectification, epipolar lines are horizontal, so correspondence search is restricted to the <strong>same row</strong>. Disparity is:</p>
+    <div class="math-block">$$d(u,v) = u_L - u_R$$</div>
+    <p>For each pixel, the match is found by minimizing a cost (SAD, SSD, NCC) over the disparity range. Depth is then:</p>
+    <div class="math-block">$$Z = \frac{fB}{d}$$</div>
+    <p>where \(f\) is the focal length and \(B\) is the stereo baseline. Depth is <strong>inversely proportional</strong> to disparity — large disparity means the point is close.</p>
+  </div>
+</div>
+
+<!-- Q12 -->
+<div class="card">
+  <div class="card-head">
+    <span class="q-num">Q12</span>
+    <span class="q-text">Gamma correction equation and its purpose</span>
+  </div>
+  <div class="card-body">
+    <div class="math-block">$$I_{\text{out}} = c \cdot I_{\text{in}}^\gamma \quad (\text{intensities normalized to } [0,1])$$</div>
+    <p><strong>Purpose:</strong> Gamma correction compensates for the nonlinear response of cameras and displays. Cameras typically apply \(\gamma < 1\) during capture; monitors apply \(\gamma \approx 2.2\) during display. It also allows perceptually uniform brightness/contrast adjustment since human vision is nonlinear in intensity.</p>
+  </div>
+</div>
+
+<!-- Q13 -->
+<div class="card">
+  <div class="card-head">
+    <span class="q-num">Q13</span>
+    <span class="q-text">Proof: histogram equalization makes the CDF linear</span>
+  </div>
+  <div class="card-body">
+    <span class="label">Proof</span>
+    <p>Define the transform \(s = T(r) = F_r(r)\), where \(F_r(r) = \int_0^r p_r(w)\,dw\) is the CDF of the input intensity \(r\).</p>
+    <p>Compute the CDF of the output \(s\):</p>
+    <div class="math-block">$$F_s(s) = P(S \le s) = P(F_r(R) \le s) = P(R \le F_r^{-1}(s)) = F_r(F_r^{-1}(s)) = s$$</div>
+    <p>Since \(F_s(s) = s\) on \([0,1]\), the output CDF is linear, which corresponds to a <strong>uniform PDF</strong> — i.e., equal numbers of pixels at each grey level. <strong>Hence proved.</strong></p>
+  </div>
+</div>
+
+<!-- Q14 -->
+<div class="card">
+  <div class="card-head">
+    <span class="q-num">Q14</span>
+    <span class="q-text">Sum of the convolution kernel weights</span>
+  </div>
+  <div class="card-body">
+    <p>The sum of kernel weights \(\sum_{i,j} K_{ij}\) determines the DC (average brightness) behavior:</p>
+    <table>
+      <tr><th>Sum</th><th>Behavior</th><th>Example</th></tr>
+      <tr><td>= 1</td><td>Preserves average brightness (low-pass)</td><td>Gaussian blur, box filter</td></tr>
+      <tr><td>= 0</td><td>Removes DC component (high-pass / edge)</td><td>Laplacian, derivative filters</td></tr>
+      <tr><td>&gt; 1</td><td>Brightens image</td><td>Amplifying kernel</td></tr>
+    </table>
+    <div class="note">For the specific kernel given in the exam, add up all entries: e.g., a Gaussian-like kernel should sum to 1 (or close to 1 if integer-valued and to be divided by the sum).</div>
+  </div>
+</div>
+
+<!-- Q15 -->
+<div class="card">
+  <div class="card-head">
+    <span class="q-num">Q15</span>
+    <span class="q-text">Proof: any LSI operator is a convolution (see Q3 Part A)</span>
+  </div>
+  <div class="card-body">
+    <p>This is identical to <strong>Exercise 3 (Part A)</strong> above. For completeness:</p>
+    <ol>
+      <li>Define impulse response \(h = T\{\delta\}\).</li>
+      <li>Decompose \(f = \sum_k f[k]\,\delta(\cdot-k)\).</li>
+      <li>By linearity: \(T\{f\} = \sum_k f[k]\,T\{\delta(\cdot-k)\}\).</li>
+      <li>By shift-invariance: \(T\{\delta(\cdot-k)\} = h(\cdot-k)\).</li>
+      <li>Therefore \(T\{f\} = \sum_k f[k]\,h(\cdot-k) = f*h\). <strong>Hence proved.</strong></li>
+    </ol>
+  </div>
+</div>
+
+<!-- Q16 -->
+<div class="card">
+  <div class="card-head">
+    <span class="q-num">Q16</span>
+    <span class="q-text">Bilateral filter equation</span>
+  </div>
+  <div class="card-body">
+    <div class="math-block">$$I'(p) = \frac{1}{W_p}\sum_{q\in\Omega} \underbrace{\exp\!\left(-\frac{\|p-q\|^2}{2\sigma_s^2}\right)}_{\text{spatial weight}} \cdot \underbrace{\exp\!\left(-\frac{(I(p)-I(q))^2}{2\sigma_r^2}\right)}_{\text{range/intensity weight}} \cdot I(q)$$</div>
+    <p>Normalization factor:</p>
+    <div class="math-block">$$W_p = \sum_{q\in\Omega} \exp\!\left(-\frac{\|p-q\|^2}{2\sigma_s^2}\right) \exp\!\left(-\frac{(I(p)-I(q))^2}{2\sigma_r^2}\right)$$</div>
+    <p>\(\sigma_s\) controls spatial extent; \(\sigma_r\) controls the intensity similarity threshold. Pixels with similar intensity but far away contribute less spatially; pixels spatially close but with very different intensity are down-weighted by the range kernel.</p>
+  </div>
+</div>
+
+<!-- Q17 -->
+<div class="card">
+  <div class="card-head">
+    <span class="q-num">Q17</span>
+    <span class="q-text">Is the bilateral filter a convolution?</span>
+  </div>
+  <div class="card-body">
+    <span class="label red">No</span>
+    <p>A convolution requires a <strong>fixed, shift-invariant kernel</strong>. In the bilateral filter, the range weight \(\exp\!\left(-\frac{(I(p)-I(q))^2}{2\sigma_r^2}\right)\) depends on the <em>actual pixel values</em> at \(p\) and \(q\), so the kernel changes at every pixel location and with every image — it is <strong>data-dependent, nonlinear, and not shift-invariant</strong>. Therefore, it cannot be written as a convolution.</p>
+  </div>
+</div>
+
+<!-- Q18 -->
+<div class="card">
+  <div class="card-head">
+    <span class="q-num">Q18</span>
+    <span class="q-text">3×3 median filter with clamping border padding</span>
+  </div>
+  <div class="card-body">
+    <p><strong>Input patch:</strong></p>
+    <table>
+      <tr><td>20</td><td>30</td><td>20</td></tr>
+      <tr><td>10</td><td>40</td><td>30</td></tr>
+      <tr><td>50</td><td>50</td><td>10</td></tr>
+    </table>
+    <p style="margin-top:10px">With <strong>clamping</strong> (replicate-border) padding, each pixel's 3×3 neighborhood is filled by repeating edge values. Sort the 9 values and take the 5th (median).</p>
+    <p><strong>Result after filtering:</strong></p>
+    <table>
+      <tr><td>20</td><td>20</td><td>30</td></tr>
+      <tr><td>30</td><td>30</td><td>30</td></tr>
+      <tr><td>50</td><td>40</td><td>30</td></tr>
+    </table>
+    <div class="note">To verify: for the center pixel (40), neighborhood = {20,30,20, 10,40,30, 50,50,10} → sorted: {10,10,20,20,30,30,40,50,50} → median (5th) = 30.</div>
+  </div>
+</div>
+
+<!-- Q19 -->
+<div class="card">
+  <div class="card-head">
+    <span class="q-num">Q19</span>
+    <span class="q-text">Hough transform for circles with estimated gradient (pseudocode)</span>
+  </div>
+  <div class="card-body">
+    <div class="pseudocode"><span class="kw">Input:</span>  Image I, radius range [r_min, r_max]
+
+<span class="num">1.</span> Apply edge detection (e.g. Canny) → edge map E
+<span class="num">2.</span> Compute gradient direction θ(x,y) for each edge pixel
+
+<span class="num">3.</span> Initialize accumulator A(a, b, r) = 0
+
+<span class="num">4.</span> <span class="kw">For each</span> edge pixel (x, y):
+     <span class="kw">For each</span> r ∈ [r_min, r_max]:
+       a₁ = x − r·cos(θ(x,y));  b₁ = y − r·sin(θ(x,y))
+       a₂ = x + r·cos(θ(x,y));  b₂ = y + r·sin(θ(x,y))
+       A(a₁, b₁, r) += 1
+       A(a₂, b₂, r) += 1
+
+<span class="num">5.</span> Find local maxima in A above threshold τ
+<span class="num">6.</span> <span class="kw">Return</span> detected circles (a, b, r) for each peak</div>
+  </div>
+</div>
+
+<!-- Q20 -->
+<div class="card">
+  <div class="card-head">
+    <span class="q-num">Q20</span>
+    <span class="q-text">Shape in Hough space for a single edge pixel (circles with gradient)</span>
+  </div>
+  <div class="card-body">
+    <p>For a single edge pixel \((x,y)\) with known gradient direction \(\theta\), the set of valid circle centers lies on <strong>two opposite rays</strong> (along \(\pm\theta\)) emanating from \((x,y)\). As the radius \(r\) varies, each ray traces a <strong>half-line</strong> in 2D center space \((a,b)\).</p>
+    <p>In the full 3D accumulator \((a, b, r)\), this becomes a <strong>curve</strong> (two branches) parameterized by \(r\):</p>
+    <div class="math-block">$$a(r) = x \mp r\cos\theta, \quad b(r) = y \mp r\sin\theta$$</div>
+    <p>Compare to the case with <em>unknown gradient</em>: there, valid centers form a full circle of radius \(r\) in \((a,b)\) space for each \(r\), i.e., a cone in 3D — much more diffuse and harder to detect.</p>
+  </div>
+</div>
+
+<!-- Q21 -->
+<div class="card">
+  <div class="card-head">
+    <span class="q-num">Q21</span>
+    <span class="q-text">Spectral clustering for \(k > 2\) (pseudocode)</span>
+  </div>
+  <div class="card-body">
+    <div class="pseudocode"><span class="kw">Input:</span>  Data points, number of clusters k
+
+<span class="num">1.</span> Build affinity (similarity) matrix W ∈ ℝⁿˣⁿ
+   e.g. W(i,j) = exp(−||xᵢ−xⱼ||² / 2σ²)
+
+<span class="num">2.</span> Compute degree matrix D:  D(i,i) = Σⱼ W(i,j)
+
+<span class="num">3.</span> Compute normalized Laplacian:
+   L_sym = I − D^(−½) W D^(−½)
+
+<span class="num">4.</span> Compute the k smallest eigenvectors u₁,…,uₖ of L_sym
+   → form embedding matrix U ∈ ℝⁿˣᵏ  (columns = eigenvectors)
+
+<span class="num">5.</span> Row-normalize U:
+   ũᵢ = uᵢ / ||uᵢ||  for each row i
+
+<span class="num">6.</span> Run k-means on rows of Ũ  →  cluster labels 1…k
+
+<span class="num">7.</span> Assign original points by their k-means label</div>
+    <div class="note"><strong>Why use eigenvectors?</strong> The Laplacian eigenvectors capture global graph structure (cluster connectivity), enabling k-means to find clusters that are not linearly separable in the original feature space.</div>
+  </div>
+</div>
+
+</div><!-- /wrap -->
+</body>
+</html>
